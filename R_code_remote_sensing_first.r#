@@ -1,0 +1,20 @@
+#Il mio primo codice in R per telerilevamento!
+
+# install.packages("raster")
+library(raster)
+
+# Definizione della cartella di lavoro in Windows
+setwd("C:/lab")
+
+# Importare i dati raster in R 
+# Funzione "brick": importa in R i dari raster in un'unica immagine satellitare 
+# E' una funzione del pacchetto raster
+# Associare il risultato della funzione (immagine satellitare importata) a un nome
+# File "RasterBrick": serie di bande in formato raster; per ciascuna banda si hanno nrow, ncol, 
+# ncell (riga x colonna). Il numero di bande è nlayers.
+
+p224r63_2011<-brick("p224r63_2011_masked.grd")
+p224r63_2011
+
+# Visualizzare le 7 bande (dati) con la funzione "plot"
+plot(p224r63_2011)
