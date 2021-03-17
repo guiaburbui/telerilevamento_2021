@@ -20,3 +20,17 @@ p224r63_2011
 # Visualizzare le bande (dati) con la funzione "plot"
 plot(p224r63_2011)
 
+# Funzione colorRampPalette() associa un colore a un'etichetta che lo identifica tra ""
+# Permette di definire quali colori/etichette associare all'immagine
+# Per indicare che le etichette scelte rappresentano tutti argomenti di uno stesso elemento (colore) si definisce un vettore
+# Per definire un vettore si usa c("argomento","",...)
+# Si possono scegliere, definendoli fuori dalla funzione, quanti livelli vogliamo inserire --> (100)
+cl<-colorRampPalette(c("black","grey","light grey"))(100)
+
+#Definire la funzione con gli argomenti: si usa il plot con il colore cl definito precedentemente
+plot(p224r63_2011, col=cl)
+
+# colour change -> new
+# cambiare i colori impostati precedentemente
+cl<-colorRampPalette(c("blue","green","yellow","magenta"))(100)
+plot(p224r63_2011, col=cl)
