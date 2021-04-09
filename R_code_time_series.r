@@ -5,6 +5,9 @@
 # install.packages("raster")
 library(raster)
 
+# install.packages("rasterVis")
+library("rasterVis")
+
 # Impostazione della directory di lavoro
 setwd("C:/lab/greenland")
 
@@ -40,6 +43,7 @@ rlist
 # Applicare la funzione raster a tutti i file della lista rlist
 lapply(rlist, raster)
 import<-lapply(rlist, raster)
+import
 
 # Creare uno stack: pacchetto di dati raster originariamente separati, in questo caso multitemporali
 # Ogni strato rappresenta una stima della temperatura della superficie terrestre che deriva dal programma Corpernicus
@@ -49,3 +53,48 @@ plot(TGr)
 # Plot RGB
 plotRGB(TGr, 1, 2, 3, stretch="Lin")
 plotRGB(TGr, 2, 3, 4, stretch="Lin")
+
+# levelplot
+# Funzione "levelplot": levelplot di oggetti raster. Riporta in un grafico un raster multilayer con una legenda e organizzazione grafica migliore rispetto alla funzione "plot"
+levelplot(TGr)
+
+# levelplot di un singolo strato dello stack unico richiamato con $
+levelplot(TGr$lst_2000)
+cl <- colorRampPalette(c("blue","light blue","pink","red"))(100)
+
+# Cambiare la color ramp palette
+# Riplottare il levelplot specificando altri argomenti della funzione
+# Argomento "col.regions": per indicare la color ramp palette da applicare
+# Argomento "names.attr": riporta nel grafico il nome di ogni attributo del file raster
+# Argomento "main": attribuisce un titolo al plot
+cl <- colorRampPalette(c("blue","light blue","pink","red"))(100)
+levelplot(TGr, col.regions=cl)
+levelplot(TGr,col.regions=cl, names.attr=c("July 2000","July 2005", "July 2010", "July 2015"))
+levelplot(TGr,col.regions=cl, main="LST variation in time",
+          names.attr=c("July 2000","July 2005", "July 2010", "July 2015"))
+
+# Analisi dati raster sullo scioglimento dei ghiacci in Groenlandia
+# Creare una lista di file
+mlist<-list.files(pattern="melt")
+mlist
+
+# lapply per applicare la funzione raster alla lista di file
+lapply(mlist, raster)
+melt_greenland<-lapply(mlist, raster)
+melt_greenland
+
+# Creare uno stack in cui ogni livello rappresenta il livello di scioglimento dei ghiacci in un determinato anno sulla base dell'assorbimento delle microonde
+melt <- stack(melt_greenland)
+melt
+
+# Plot e levelplot
+plot(melt)
+levelplot(melt)
+
+melt_amount <- melt$X2007annual_melt - melt$X1979annual_melt
+melt_amount
+clb <- colorRampPalette(c("blue","white","red"))(100)
+plot(melt_amount, col=clb)
+levelplot(melt_amount, col.regions=clb)
+ 
+
